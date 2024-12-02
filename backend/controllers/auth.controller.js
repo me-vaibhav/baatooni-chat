@@ -6,14 +6,15 @@ import { sendVerificationEmail } from '../mailtrap/email.js'
 import generateTokenAndSetCookie from '../utils/generateTokenAndSetCookie.js'
 
 export const signup = async(req,res)=>{
-    const {username,password,gender,email}=req.body
+    const {confirmPassword,username,password,gender,email}=req.body
     try {
+        if(password!==confirmPassword){return res.status(400)..json({message:"password dont match"})}
         if(!email||!password||!username||!gender){
             throw new Error("fill em all")
         }
         const userAlreadyExists = await User.findOne({username})
         if(userAlreadyExists){
-            return res.status(400).json({succes:false,message:"User already exists"})
+            return res.status(400).json({success:false,message:"User already exists"})
         } 
     
         const hashedPassword = await bcryptjs.hash(password,10)
