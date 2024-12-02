@@ -8,7 +8,7 @@ import generateTokenAndSetCookie from '../utils/generateTokenAndSetCookie.js'
 export const signup = async(req,res)=>{
     const {confirmPassword,username,password,gender,email}=req.body
     try {
-        if(password!==confirmPassword){return res.status(400)..json({message:"password dont match"})}
+        if(password!==confirmPassword){return res.status(400).json({message:"password dont match"})}
         if(!email||!password||!username||!gender){
             throw new Error("fill em all")
         }
